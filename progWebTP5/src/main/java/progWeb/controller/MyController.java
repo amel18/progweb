@@ -157,13 +157,19 @@ public class MyController {
 	public void nextFoe(HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException, IOException {
 		int previousFoe = -1;
+		String hero = "";
 		for (Cookie c : request.getCookies()) {
 			if (c.getName().equals("foeNumber")) {
 				previousFoe = Integer.parseInt(c.getValue());
 			}
+			if(c.getName().equals("name")){
+				hero = c.getValue();
+			}
 		}
 		try {
 			Character foe = Universe.getMonsters().get(previousFoe + 1);
+			if(foe.getName().compareTo(hero) == 0)
+				previousFoe ++;
 			response.addCookie(new Cookie("foeNumber", "" + (previousFoe + 1)));
 			response.addCookie(new Cookie("foeName", foe.getName()));
 			response.addCookie(new Cookie("foeHP", " " + foe.getHpMax()));
