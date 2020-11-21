@@ -1,31 +1,74 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Mon Personnage</title>
-<link rel="stylesheet" href="general.css">
-<script src="cookies.js"></script>
+    <meta charset="UTF-8">
+    <title>Mon Personnage</title>
+    <link rel="stylesheet" href="general.css">
+    <script src="cookies.js"></script>
 </head>
+
 <body>
 
-<p> 
-Nom : <span id="nameValue" class="bold"></span> <br>
-HP : <span id="HPValue" class="bold" ></span><br>
-Attaque : <span id="attackValue" class="bold"></span><br>
-Esquive : <span id="dodgeValue" class="bold"></span><br>
-</p>
+    <p>
+        Nom : <span id="nameValue" class="bold"></span> <br>
+        HP : <span id="HPValue" class="bold"></span><br>
+        Attaque : <span id="attackValue" class="bold"></span><br>
+        Esquive : <span id="dodgeValue" class="bold"></span><br>
+    </p>
 
 
-<script>
-//cherche et affiche le nom
-document.getElementById("nameValue").innerHTML = findValueCookie("name"); 
-document.getElementById("attackValue").innerHTML = findValueCookie("attack"); 
-document.getElementById("HPValue").innerHTML = findValueCookie("HP"); 
-document.getElementById("dodgeValue").innerHTML = findValueCookie("dodge"); 
 
-</script>
+    <p id="adversaireInfo">
+        Nom : <span id="nameValueAdversaire" class="bold"></span> <br>
+        HP : <span id="HPValueAdversaire" class="bold"></span><br>
+        Attaque : <span id="attackValueAdversaire" class="bold"></span><br>
+        Esquive : <span id="dodgeValueAdversaire" class="bold"></span><br>
+    </p>
+     	<button class="button" type="button" id="adversaire">
+        Affonter un adversaire
+    </button>
+ 	
+     <a href="/takeOrDodgeDammage.html" class="button" id="takeDammage" style="display: none">Take Dammage?</a>
+    <script>
+        //cherche et affiche le nom
+        document.getElementById("nameValue").innerHTML = findValueCookie("name");
+        document.getElementById("attackValue").innerHTML = findValueCookie("attack");
+        document.getElementById("HPValue").innerHTML = findValueCookie("HP");
+        document.getElementById("dodgeValue").innerHTML = findValueCookie("dodge");
+    
 
-<a href="/takeOrDodgeDammage.html" class ="button">Take Dammage?</a>
+        var reponseDuServ = document.getElementById("ma-valeur");
 
-</body>
+        adversaire.onclick = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'nextFoe', true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log("onload");
+                    
+                }
+                else {
+                    alert('Request failed.  Returned status of ' + xhr.status);
+                }
+            };
+            xhr.send()
+            document.location.reload();
+            console.log("fin fonction");
+		
+        }
+        if(findValueCookie("foeName") === undefined){
+        	console.log("pas d'adversaire");
+        }
+        else
+        	{
+        	  document.getElementById("nameValueAdversaire").innerHTML = findValueCookie("foeName");
+              document.getElementById("attackValueAdversaire").innerHTML = findValueCookie("foeAttack");
+              document.getElementById("HPValueAdversaire").innerHTML = findValueCookie("foeHP");
+              document.getElementById("dodgeValueAdversaire").innerHTML = findValueCookie("foeDodge");
+              document.getElementById("adversaire").style.display = "none";
+              document.getElementById("takeDammage").style.display = "inline";
+        	}
+    </script>
+
 </html>

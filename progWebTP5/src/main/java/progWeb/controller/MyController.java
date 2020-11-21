@@ -108,7 +108,9 @@ public class MyController {
 			response.addCookie(new Cookie("attack", "" + chosen.getAttack()));
 			response.addCookie(new Cookie("dodge", "" + chosen.getDodgePercent()));
 		}
+		
 		response.sendRedirect("/showCharacter.html");
+		
 	}
 
 //	@RequestMapping(value = "/character", method = RequestMethod.GET)
@@ -172,8 +174,9 @@ public class MyController {
 				previousFoe ++;
 			response.addCookie(new Cookie("foeNumber", "" + (previousFoe + 1)));
 			response.addCookie(new Cookie("foeName", foe.getName()));
-			response.addCookie(new Cookie("foeHP", " " + foe.getHpMax()));
+			response.addCookie(new Cookie("foeHP", "" + foe.getHpMax()));
 			response.addCookie(new Cookie("foeAttack", "" + foe.getAttack()));
+			response.addCookie(new Cookie("foeDodge", "" + foe.getDodgePercent()));
 		} catch (IndexOutOfBoundsException e) {
 			response.getOutputStream().write("Tous les ennemis sont vaincus".getBytes("UTF-8"));
 		}

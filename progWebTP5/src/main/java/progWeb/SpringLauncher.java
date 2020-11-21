@@ -15,6 +15,10 @@ public class SpringLauncher {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLauncher.class, args);
 		Universe.creation();
+//		System.out.println(Universe.getMonsters().size());
+//		for ( int i = -1; i < Universe.getMonsters().size(); i++ ) {
+//		    System.out.println(Universe.getMonsters().get(i));
+//        }
 		System.out.println("Version 5.1 démarrée");
 	}
 }
