@@ -26,16 +26,24 @@
         Esquive : <span id="dodgeValueAdversaire" class="bold"></span><br>
     </p>
      	<button class="button" type="button" id="adversaire">
-        Affonter un adversaire
+       Affonter un adversaire ?
     </button>
  	
      <a href="/takeOrDodgeDammage.html" class="button" id="takeDammage" style="display: none">Take Dammage?</a>
+     <p>
+     	Nombre adversaire vaincu :   <span id="nbrAdversaire" class="bold"></span><br>
+     </p>
+      </p>
+     	<a href="/chooseCharacter.html" class="button" type="button" id="newGame" style="display: none" >
+       Rejouer une partie ?
+    </button>
     <script>
         //cherche et affiche le nom
         document.getElementById("nameValue").innerHTML = findValueCookie("name");
         document.getElementById("attackValue").innerHTML = findValueCookie("attack");
         document.getElementById("HPValue").innerHTML = findValueCookie("HP");
         document.getElementById("dodgeValue").innerHTML = findValueCookie("dodge");
+        
     
 
         var reponseDuServ = document.getElementById("ma-valeur");
@@ -57,18 +65,39 @@
             console.log("fin fonction");
 		
         }
-        if(findValueCookie("foeName") === undefined){
+        if(findValueCookie("foeNumber") == "-1"){
         	console.log("pas d'adversaire");
         }
-        else
+        else if (findValueCookie("noMonster") == "NO"){
         	{
-        	  document.getElementById("nameValueAdversaire").innerHTML = findValueCookie("foeName");
-              document.getElementById("attackValueAdversaire").innerHTML = findValueCookie("foeAttack");
-              document.getElementById("HPValueAdversaire").innerHTML = findValueCookie("foeHP");
-              document.getElementById("dodgeValueAdversaire").innerHTML = findValueCookie("foeDodge");
-              document.getElementById("adversaire").style.display = "none";
-              document.getElementById("takeDammage").style.display = "inline";
-        	}
+          	  document.getElementById("nameValueAdversaire").innerHTML = findValueCookie("foeName");
+                document.getElementById("attackValueAdversaire").innerHTML = findValueCookie("foeAttack");
+                document.getElementById("HPValueAdversaire").innerHTML = findValueCookie("foeHP");
+                document.getElementById("dodgeValueAdversaire").innerHTML = findValueCookie("foeDodge");
+                document.getElementById("takeDammage").style.display = "inline";
+                document.getElementById("adversaire").style.display = "none";
+          	}
+          if(findValueCookie("foeHP") =="0" ){
+          	document.getElementById("takeDammage").style.display = "none";
+          	document.getElementById("adversaire").style.display = "inline";
+          	document.getElementById("nbrAdversaire").innerHTML = parseInt(findValueCookie("foeNumber"))+1;
+          	
+          }
+          if( findValueCookie("HP") == "0" ){
+          	alert("Game Over !");
+          	document.getElementById("takeDammage").style.display = "none";
+          	document.getElementById("adversaire").style.display = "none";
+          	document.getElementById("nbrAdversaire").innerHTML = findValueCookie("foeNumber");
+          	document.getElementById("newGame").style.display = "inline-block";
+          
+          }
+        }
+        else{
+        	alert("Tous les ennemis sont vaincus !!! VICTOIRE");
+        	document.getElementById("nbrAdversaire").innerHTML = parseInt(findValueCookie("foeNumber"))+1;
+        	document.getElementById("newGame").style.display = "inline-block";
+        }
+
     </script>
 
 </html>

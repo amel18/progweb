@@ -9,11 +9,13 @@
 </head>
 <body>
 <form  action="/takeDammage" method="get" id="form">
-        <label for="nbDammage">Dégats :</label>
+        <label for="nbDammage">Dégats Héro:</label>
         <input type="number" id="nbDammage" name="dammage">
+        <label for="nbDammageAdverssaire">Dégats Adverssaire:</label>
+        <input type="number" id="nbDammageAdverssaire" name=dammageAdverssaire>
+        
         <div id="takeOrDodge">
 </div>
-
 <a id="testButton" class="button" onclick="draw()">Esquive ?</a>
 
 <div id="takeOrDodge">
@@ -27,14 +29,23 @@
 <script>
 function draw(){
 	console.log("draw");
-	if (document.getElementById("nbDammage").value==""){
+	if (document.getElementById("nbDammage").value=="" || document.getElementById("nbDammageAdverssaire").value=="" ){
 		return;
 	}
 	if(Math.random()<findValueCookie("dodge")){
-		document.getElementById("takeOrDodge").innerHTML = "Esquivé ! <a href='/showCharacter'>Retour à la fiche de personnage</a><br>";
-		document.getElementById("submitButton").style="display:none";
-		document.getElementById("testButton").innerHTML="Retirer" ;
+		document.getElementById("nbDammage").value="0";
 		console.log("dodge");
+	
+	} else {
+		document.getElementById("takeOrDodge").innerHTML = "Aïe <br>";
+		document.getElementById("submitButton").style="";
+		document.getElementById("testButton").innerHTML="Retirer" ;
+		console.log("take");
+	}
+	if(Math.random()<findValueCookie("foeDodge")){
+		document.getElementById("nbDammageAdverssaire").value="0";
+		console.log("dodge");
+	
 	} else {
 		document.getElementById("takeOrDodge").innerHTML = "Aïe <br>";
 		document.getElementById("submitButton").style="";

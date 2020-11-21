@@ -107,6 +107,9 @@ public class MyController {
 			response.addCookie(new Cookie("HP", "" + chosen.getHpMax()));
 			response.addCookie(new Cookie("attack", "" + chosen.getAttack()));
 			response.addCookie(new Cookie("dodge", "" + chosen.getDodgePercent()));
+			response.addCookie(new Cookie("foeNumber", "" + (-1)));
+			response.addCookie(new Cookie("noMonster", "NO"));
+			
 		}
 		
 		response.sendRedirect("/showCharacter.html");
@@ -138,18 +141,26 @@ public class MyController {
 			throws UnsupportedEncodingException, IOException {
 
 		String damStr = request.getParameter("dammage");
+		String damStrAdversaire = request.getParameter("dammageAdverssaire");
 		System.out.println(damStr);
-		if (damStr != null) {
+		if (damStr != null && damStrAdversaire != null) {
 			int dammage = Integer.parseInt(damStr);
+			int dammageAdverssaire = Integer.parseInt(damStrAdversaire);
 			int hp = 0;
+			int hpAdverssaire = 0;
 			for (Cookie c : request.getCookies()) {
 
 				if (c.getName().equals("HP")) {
 					hp = Integer.parseInt(c.getValue());
 				}
+				if(c.getName().equals("foeHP")) {
+				    hpAdverssaire = Integer.parseInt(c.getValue());
+				}
 			}
 			hp = (hp - dammage > 0) ? hp - dammage : 0;
+			hpAdverssaire = (hpAdverssaire - dammageAdverssaire > 0) ? hp - dammageAdverssaire : 0;
 			response.addCookie(new Cookie("HP", "" + hp));
+			response.addCookie(new Cookie("foeHP", "" + hpAdverssaire));
 		}
 		response.sendRedirect("/showCharacter.html");
 
@@ -169,7 +180,11 @@ public class MyController {
 			}
 		}
 		try {
+		    if(Universe.getMonsters().size() <= previousFoe + 1)
+		        response.addCookie(new Cookie("noMonster", "YES"));
+		    
 			Character foe = Universe.getMonsters().get(previousFoe + 1);
+			
 			if(foe.getName().compareTo(hero) == 0)
 				previousFoe ++;
 			response.addCookie(new Cookie("foeNumber", "" + (previousFoe + 1)));
