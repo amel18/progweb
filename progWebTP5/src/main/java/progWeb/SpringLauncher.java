@@ -19,7 +19,7 @@ public class SpringLauncher {
 //		for ( int i = -1; i < Universe.getMonsters().size(); i++ ) {
 //		    System.out.println(Universe.getMonsters().get(i));
 //        }
-		System.out.println(Universe.getMonsters().get(3));
+		
 		System.out.println("Version 5.1 démarrée");
 	}
 }
